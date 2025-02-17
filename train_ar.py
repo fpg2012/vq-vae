@@ -65,7 +65,7 @@ class ARTrainer:
             model.eval()
             with torch.no_grad():
                 for _, (X, y) in enumerate(self.test_loader):
-                    X = X.to(self.device)
+                    X, y = X.to(self.device), y.to(device)
                     indx, quantized = vqvae.encode(X)
                 
                     seq = torch.cat([model.sos_tokens(y)[:, None, :], quantized], dim=1)
